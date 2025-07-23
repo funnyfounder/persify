@@ -8,15 +8,43 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+   <!-- BASIC SEO META TAGS -->
+  <title>PERSIFY – Discover Your Personality Quiz</title>
+  <meta name="description" content="Take the Persify quiz to explore your unique personality, compare with friends, and share your results!">
+  <meta name="author" content="Suraj Kumar Gupta">
+  <meta name="robots" content="index, follow">
+  <!-- Social Media/OpenGraph -->
+  <meta property="og:title" content="PERSIFY – Personality Quiz Game">
+  <meta property="og:description" content="Step into a neon wonderland of questions, laughter, and discovery. Reveal your personality and share with friends. Try it now!">
+  <meta property="persify/logo.png" content="https://funnyfounder.github.io/persify/logo.png">
+  <meta property="https://funnyfounder.github.io/persify" content="https://funnyfounder.github.io/persify">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png">
+  <!-- Google Fonts and CSS ... -->
+  <!-- Your other <link> and <script> tags here -->
 </head>
 <body>
-  <header id="site-header">PERSIFY</header>
+  <!-- Header with logo -->
+  <header id="site-header">
+    <img src="logo.png" alt="Persify Logo" style="height:56px; margin-bottom: 6px;">
+    <div class="persify-title">PERSIFY</div>
+  </header>
 
-  <main id="app"><!-- dynamic content --></main>
+  <!-- Main dynamic content -->
+  <main id="app"><!-- dynamic content injected here --></main>
 
+  <!-- Footer -->
   <footer id="site-footer"></footer>
 
+  <!-- Confetti canvas animation -->
   <canvas id="confetti-canvas"></canvas>
+
+  <!-- Your game logic script -->
   <script src="script.js"></script>
+
+  <!-- HTML2Canvas for screenshot sharing -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 </html>
