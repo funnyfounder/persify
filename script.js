@@ -240,11 +240,14 @@ function sharePNG() {
   const el = document.getElementById('result-share');
   html2canvas(el).then(canvas => {
     canvas.toBlob(blob => {
-      // Web Share API (PNG only, no copy link)
-      if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'Persify-Result.png', {type: blob.type})] })) {
+      const shareText = "Try it yourself: https://funnyfounder.github.io/persify";
+      if (
+        navigator.canShare &&
+        navigator.canShare({ files: [new File([blob], 'Persify-Result.png', {type: blob.type})], text: shareText })
+      ) {
         navigator.share({
           files: [new File([blob], 'Persify-Result.png', { type: blob.type })],
-          text: "Try Persify and discover your personality! https://funnyfounder.github.io/persify",
+          text: shareText,
           title: "My Persify Personality Quiz Result"
         });
       } else {
@@ -253,7 +256,7 @@ function sharePNG() {
         link.download = "Persify-Result.png";
         link.href = canvas.toDataURL();
         link.click();
-        // No copy link or alert—PNG only
+        // For download only, user would have to send the caption manually.
       }
     });
   });
