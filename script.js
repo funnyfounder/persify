@@ -241,22 +241,27 @@ function sharePNG() {
   html2canvas(el).then(canvas => {
     canvas.toBlob(blob => {
       const shareText = "Try it yourself: https://funnyfounder.github.io/persify";
+      const file = new File([blob], 'Persify-Result.png', { type: blob.type });
+      // Most modern Android and WhatsApp/Telegram will use this text as caption
       if (
         navigator.canShare &&
-        navigator.canShare({ files: [new File([blob], 'Persify-Result.png', {type: blob.type})], text: shareText })
+        navigator.canShare({ files: [file], text: shareText })
       ) {
         navigator.share({
-          files: [new File([blob], 'Persify-Result.png', { type: blob.type })],
+          files: [file],
           text: shareText,
           title: "My Persify Personality Quiz Result"
         });
       } else {
-        // Fallback: Download the PNG only
+        // For platforms that don't support text+file, fallback: image download and prompt copy link
         const link = document.createElement('a');
         link.download = "Persify-Result.png";
         link.href = canvas.toDataURL();
         link.click();
-        // For download only, user would have to send the caption manually.
+        setTimeout(() => {
+          // Prompt user to manually copy the link, if they want
+          prompt("Your result image was saved!\nTo share and invite friends, copy and paste this link with your result image:", "https://funnyfounder.github.io/persify");
+        }, 200);
       }
     });
   });
