@@ -15,17 +15,60 @@
 html,body{min-height:100vh;font-family:'Orbitron',Arial,sans-serif;background:linear-gradient(145deg,var(--dark),var(--dark2));color:var(--white);overflow-x:hidden}
 
 /* ---------- HEADER ---------- */
-#site-header{
-  font-family:'Bebas Neue',cursive;
-  font-size:2.8rem;
-  letter-spacing:4px;
-  text-align:center;
-  padding:18px 0 12px;
-  background:var(--grad);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  text-shadow:0 4px 22px rgba(0,0,0,.4);
+.horizontal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 110px;
+  padding: 10px 0 18px 0;
+  position: relative;
+  background: transparent;
 }
+
+/* Logo: Large for desktop, scaled smartly for mobile */
+.persify-logo {
+  height: 86px;
+  width: 86px;
+  margin-left: 32px;
+  margin-right: 40px;
+  border-radius: 18px;
+  object-fit: contain;
+  background: #fff;
+  box-shadow: 0 6px 30px #0002;
+  flex-shrink: 0;
+}
+
+/* Brand name: Bold custom font, strong gradient */
+.persify-title {
+  flex: 1;
+  font-family: 'Bebas Neue', 'Orbitron', Arial, sans-serif;
+  font-size: 3.2rem;
+  font-weight: bold;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  background: linear-gradient(90deg, #ff3b6c 0%, #ff79b0 50%, #8edbff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 3px 18px #fff7;
+  margin-right: 74px;   /* balances logo on left (tune if adjusting logo margin) */
+  margin-left: -86px;   /* cancels logo width to truly center text in header */
+  padding-top: 8px;
+  padding-bottom: 4px;
+}
+
+/* Responsive: Smartly scale down logo and brand on smaller screens */
+@media (max-width: 900px) {
+  .persify-logo { height: 62px; width: 62px; margin-left: 10px; margin-right: 18px;}
+  .persify-title { font-size: 2.1rem; letter-spacing: 7px; margin-right: 26px; margin-left: -62px;}
+}
+@media (max-width: 600px) {
+  .horizontal-header { min-height: 60px; padding: 4px 0 8px;}
+  .persify-logo { height: 40px; width: 40px; margin-left: 5px; margin-right: 8px;">
+  .persify-title { font-size: 1.08rem; letter-spacing: 2px; margin-right: 9px; margin-left: -40px; }
+                }
+  
 
 /* ---------- FOOTER ---------- */
 #site-footer{
