@@ -203,36 +203,63 @@ function advance(p,q){
   else results();
 }
 
-function results(){
-  setFooter(true);confetti();
-  const reports=S.players.map((nm,idx)=>{
-    const sco=TRAITS.reduce((m,t)=>(m[t.k]=0,m),{});
-    S.resp[idx].forEach((ans,i)=>{const o=Q[S.order[i]].o[ans];for(const[k,v]of Object.entries(o.a))sco[k]+=v});
-    const max=Math.max(...Object.values(sco));
-    const tops=TRAITS.filter(t=>sco[t.k]===max);
-    return{nm,sco,tops};
+function results() {
+  setFooter(true); confetti();
+  const reports = S.players.map((nm, idx) => {
+    const sco = TRAITS.reduce((m, t) => (m[t.k] = 0, m), {});
+    S.resp[idx].forEach((ans, i) => {
+      const o = Q[S.order[i]].o[ans];
+      for (const [k, v] of Object.entries(o.a)) sco[k] += v;
+    });
+    const max = Math.max(...Object.values(sco));
+    const tops = TRAITS.filter(t => sco[t.k] === max);
+    return { nm, sco, tops };
   });
-  app.innerHTML=`
-    <div class="result">
+
+  app.innerHTML = `
+    <div class="result" id="result-share">
       <h2 class="rtitle">Your Persify Profile</h2>
-      ${reports.map(r=>`
-        <h3 style="margin:12px 0">${r.nm} – ${r.tops.map(t=>t.e).join(' ')}</h3>
-        <p><b>Top trait(s):</b> ${r.tops.map(t=>t.l).join(', ')}</p>
-        <p>${TRAITS.map(t=>`${t.e} ${t.l}: <b>${r.sco[t.k]}</b>`).join(' ‧ ')}</p>
+      ${reports.map(r => `
+        <h3 style="margin:12px 0">${r.nm} – ${r.tops.map(t => t.e).join(' ')}</h3>
+        <p><b>Top trait(s):</b> ${r.tops.map(t => t.l).join(', ')}</p>
+        <p>${TRAITS.map(t => `${t.e} ${t.l}: <b>${r.sco[t.k]}</b>`).join(' ‧ ')}</p>
         <div style="margin:10px 0 22px;font-style:italic">${rnd(TIPS)}</div>
         <hr/>
       `).join('')}
+      <div style="text-align:center; font-size:.93em; margin:18px 0;">
+        Try it yourself: <b>https://funnyfounder.github.io/persify</b>
+      </div>
       <button class="btn start-btn" onclick="landing()">Play Again</button>
-      <button class="btn share-btn" onclick="share()">Share Result</button>
+      <button class="btn share-btn" onclick="sharePNG()">Share as Image</button>
     </div>
   `;
 }
 
-function share(){
-  const text="I just explored my traits on PERSIFY's Quiz World! 🚀";
-  if(navigator.share){navigator.share({title:"Persify Result",text,url:location.href});}
-  else{navigator.clipboard.writeText(text+" "+location.href).then(()=>alert("Link copied!"));}
+
+function sharePNG() {
+  const el = document.getElementById('result-share');
+  html2canvas(el).then(canvas => {
+    canvas.toBlob(blob => {
+      // Web Share API (PNG only, no copy link)
+      if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'Persify-Result.png', {type: blob.type})] })) {
+        navigator.share({
+          files: [new File([blob], 'Persify-Result.png', { type: blob.type })],
+          text: "Try Persify and discover your personality! https://funnyfounder.github.io/persify",
+          title: "My Persify Personality Quiz Result"
+        });
+      } else {
+        // Fallback: Download the PNG only
+        const link = document.createElement('a');
+        link.download = "Persify-Result.png";
+        link.href = canvas.toDataURL();
+        link.click();
+        // No copy link or alert—PNG only
+      }
+    });
+  });
 }
+window.sharePNG = sharePNG;
+
 
 /* ---------- START ---------- */
 window.playerSelect = playerSelect;
